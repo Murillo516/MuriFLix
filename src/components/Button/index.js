@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Button = styled(Link)`
   color: var(--white);
@@ -22,4 +22,4 @@ const Button = styled(Link)`
   }
 `;
 
-export default Button
+export default Button;
