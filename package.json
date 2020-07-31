@@ -21,6 +21,7 @@
     "start": "npm run server",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "server:static": "json-server --watch ./src/data/db.json --port 8080",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
