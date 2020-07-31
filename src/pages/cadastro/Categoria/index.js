@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormFIeld';
+import PageDefault from '../../../components/PageDefault';
 import Button from '../../../components/Button';
 
 function CadastroCategoria() {
@@ -15,15 +14,15 @@ function CadastroCategoria() {
   const [categorias, setCategorias] = useState([]);
   const [values, setValues] = useState(valoresIniciais);
 
-  function setValue(key, valor) {
+  function setValue(chave, valor) {
+    // chave: nome
     setValues({
       ...values,
-      [key]: valor,
+      [chave]: valor, // nome: 'valor'
     });
   }
 
   function handleChange(infosDoEvento) {
-    // const { getAttribute, value } = infosDoEvento.target; -- it's not working
     setValue(
       infosDoEvento.target.getAttribute('name'),
       infosDoEvento.target.value,
@@ -31,11 +30,17 @@ function CadastroCategoria() {
   }
 
   useEffect(() => {
-    console.log('opa');
+    const URL = window.location.hostname.includes('localhost')
+      ? 'http://localhost:8080/categorias'
+      : 'https://rafaflixdev.herokuapp.com/categorias';
 
-    setTimeout(() => {
-
-    });
+    fetch(URL)
+      .then(async (respostaDoServidor) => {
+        const resposta = await respostaDoServidor.json();
+        setCategorias([
+          ...resposta,
+        ]);
+      });
   }, []);
 
   return (
@@ -57,7 +62,7 @@ function CadastroCategoria() {
       >
 
         <FormField
-          label="Nome da categoria"
+          label="Nome da Categoria"
           type="text"
           name="nome"
           value={values.nome}
@@ -84,6 +89,12 @@ function CadastroCategoria() {
           Cadastrar
         </Button>
       </form>
+
+      {categorias.length === 0 && (
+      <div>
+        Loading...
+      </div>
+      )}
 
       <ul>
         {categorias.map((categoria) => (
